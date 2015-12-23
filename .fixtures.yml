@@ -1,0 +1,6 @@
+fixtures:
+  repositories:
+    noconfigpkgs:
+      repo: "ssh://git@stash.adaptavist.com:7999/pup/puppet-noconfigpkgs.git"
+  symlinks:
+    etckeeper: "#{source_dir}"
