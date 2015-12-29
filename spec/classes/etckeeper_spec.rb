@@ -69,4 +69,11 @@ describe 'etckeeper', :type => 'class' do
       )
     end
   end
+
+  context "Should fail with unsupported OS family" do
+    let(:facts) {{ :osfamily => 'Solaris' }}
+    it do
+      should raise_error(Puppet::Error, /etckeeper - Unsupported Operating System family: Solaris/)
+    end
+  end
 end

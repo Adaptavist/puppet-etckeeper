@@ -17,6 +17,9 @@ class etckeeper(
           $gitpackage = 'git'
           $etckeeper_package = 'etckeeper'
       }
+      default: {
+          fail("etckeeper - Unsupported Operating System family: ${::osfamily}")
+      }
   }
 
   package { $etckeeper_package:
@@ -25,7 +28,7 @@ class etckeeper(
 
   file { '/etc/etckeeper':
     ensure => directory,
-    mode   => 0755,
+    mode   => '0755',
   }
 
   file { 'etckeeper.conf':
@@ -34,7 +37,7 @@ class etckeeper(
     owner   => root,
     group   => root,
     mode    => '0644',
-    content => template("$module_name/etckeeper.conf.erb"),
+    content => template("${module_name}/etckeeper.conf.erb"),
   }
 
   exec { 'etckeeper-init':
@@ -56,10 +59,10 @@ class etckeeper(
 
   # finally install and initiallize etckeeper to track our changes
   exec {'add_remote_repo' :
-          command     => "etckeeper vcs remote add origin $git_repo",
-          logoutput   => on_failure,
-          unless      => "etckeeper vcs config --get remote.origin.url == $git_repo",
-          require     => File['/etc/etckeeper/commit.d/60-push'],
+          command   => "etckeeper vcs remote add origin ${git_repo}",
+          logoutput => on_failure,
+          unless    => "etckeeper vcs config --get remote.origin.url == ${git_repo}",
+          require   => File['/etc/etckeeper/commit.d/60-push'],
   }
   exec {'make_first_commit' :
           command   => "etckeeper commit -m \"${first_message}\" > /dev/null",
