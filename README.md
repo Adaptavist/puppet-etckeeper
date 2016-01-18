@@ -1,4 +1,5 @@
 # EtcKeeper Module
+[![Build Status](https://travis-ci.org/Adaptavist/puppet-etckeeper.svg?branch=master)](https://travis-ci.org/Adaptavist/puppet-etckeeper)
 
 ## Overview
 
