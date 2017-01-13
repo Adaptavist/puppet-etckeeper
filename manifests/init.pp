@@ -5,13 +5,13 @@ class etckeeper(
   include noconfigpkgs::git
 
   case $::osfamily {
-      Debian: {
+      'Debian': {
           $etckeeper_high_pkg_mgr = 'apt'
           $etckeeper_low_pkg_mgr = 'dpkg'
           $gitpackage = 'git-core'
           $etckeeper_package = 'etckeeper'
       }
-      RedHat: {
+      'RedHat': {
           $etckeeper_high_pkg_mgr = 'yum'
           $etckeeper_low_pkg_mgr = 'rpm'
           $gitpackage = 'git'

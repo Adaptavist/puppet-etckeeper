@@ -14,7 +14,7 @@ describe 'etckeeper', :type => 'class' do
   context "Should install package, create user, config files and run etckeeper init exec on Debian" do
     let(:facts) {{ :osfamily => 'Debian' }}
     it do
-      should contain_noconfigpkgs__git
+      should contain_class('noconfigpkgs::git')
       should contain_package(etckeeper_package_deb).with_ensure('installed')
       should contain_file('/etc/etckeeper').with(
         'ensure' => 'directory',
@@ -43,7 +43,7 @@ describe 'etckeeper', :type => 'class' do
   context "Should install package, create user, config files and run etckeeper init exec on RedHat" do
     let(:facts) {{ :osfamily => 'RedHat' }}
     it do
-      should contain_noconfigpkgs__git
+      should contain_class('noconfigpkgs::git')
       should contain_package(etckeeper_package_red).with_ensure('installed')
       
       should contain_file('/etc/etckeeper').with(
