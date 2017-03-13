@@ -1,26 +1,13 @@
 class etckeeper(
-  $git_repo = undef,
-  $first_message = 'first commit',
-  ) {
-  include noconfigpkgs::git
+  $git_repo               = $etckeeper::params::git_repo,
+  $first_message          = $etckeeper::params::first_message,
+  $etckeeper_high_pkg_mgr = $etckeeper::params::etckeeper_high_pkg_mgr,
+  $etckeeper_low_pkg_mgr  = $etckeeper::params::etckeeper_low_pkg_mgr,
+  $gitpackage             = $etckeeper::params::gitpackage,
+  $etckeeper_package      = $etckeeper::params::etckeeper_package,
+  ) inherits etckeeper::params {
 
-  case $::osfamily {
-      'Debian': {
-          $etckeeper_high_pkg_mgr = 'apt'
-          $etckeeper_low_pkg_mgr = 'dpkg'
-          $gitpackage = 'git-core'
-          $etckeeper_package = 'etckeeper'
-      }
-      'RedHat': {
-          $etckeeper_high_pkg_mgr = 'yum'
-          $etckeeper_low_pkg_mgr = 'rpm'
-          $gitpackage = 'git'
-          $etckeeper_package = 'etckeeper'
-      }
-      default: {
-          fail("etckeeper - Unsupported Operating System family: ${::osfamily}")
-      }
-  }
+  include noconfigpkgs::git
 
   package { $etckeeper_package:
       ensure => 'installed',
